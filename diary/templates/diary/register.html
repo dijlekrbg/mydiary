@@ -1,0 +1,19 @@
+{% extends 'diary/base.html' %}
+{% load static %}
+
+{% block title %}Kayıt Ol{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'diary/style.css' %}">
+
+<div class="container">
+    <h2>Kayıt Ol</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Kayıt Ol</button>
+    </form>
+
+    <p>Zaten hesabınız var mı? <a href="{% url 'login' %}">Giriş Yap</a></p>
+</div>
+{% endblock %}

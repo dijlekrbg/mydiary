@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Günlük Girdileri</title>
+    <link rel="stylesheet" href="{% static 'diary/style.css' %}">
+</head>
+<body>
+    <h1>Günlük Girdileri</h1>
+
+    {% for entry in entries %}
+        <div class="entry">
+            <h2>{{ entry.title }}</h2>
+            <p>{{ entry.content }}</p>
+
+            {% if entry.photo %}
+            <div>
+                <img src="{{ entry.photo.url }}" alt="fotoğraf" style="max-width:300px; max-height: 300px;">
+            </div>
+            {% endif %}
+            <p><small>Oluşturulma: {{ entry.created_at }}</small></p>
+            <hr>
+        </div>
+    {% empty %}
+        <p>Hiç günlük girişi bulunamadı.</p>
+    {% endfor %}
+</body>
+</html>

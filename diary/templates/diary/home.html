@@ -1,0 +1,53 @@
+{% extends 'diary/base.html' %}
+{% load static %}
+
+{% block title %}Ana Sayfa{% endblock %}
+
+{% block content %}
+<h1>HOŞGELDİNİZ!</h1>
+
+<p><a href="{% url 'register' %}">Kayıt Ol</a> | <a href="{% url 'login' %}">Giriş Yap</a></p>
+
+<!-- Takvim -->
+<div id="calendar"></div>
+
+<!-- FullCalendar CSS ve JS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridWeek',
+        locale: 'tr',
+        height: 'auto',
+        events: '/api/calendar-events/',
+        dateClick: function(info) {
+            window.location.href = `/calendar/day/${info.dateStr}/`;
+        },
+        headerToolbar:{
+            left: 'prev,next',
+            center: 'title ',
+            right : ''
+        }
+    });
+
+    calendar.render();
+});
+</script>
+
+<style>
+  #calendar {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: white;
+    font-size: 12px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  }
+</style>
+
+{% endblock %}

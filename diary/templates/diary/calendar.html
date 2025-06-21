@@ -1,0 +1,73 @@
+{% extends 'diary/base.html' %}
+{% load static %}
+
+{% block title %}Takvim{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Takvim</h2>
+
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+    <div id="calendar"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
+    const accessToken = localStorage.getItem('access');
+
+    if (!accessToken) {
+        alert("Yetkilendirme hatası: Lütfen tekrar giriş yapın.");
+        window.location.href = "/login/";
+        return;
+    }
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'tr',
+        height: 'auto',
+
+        events: function(fetchInfo, successCallback, failureCallback) {
+            fetch('/api/calendar-events/', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('access')
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Yetkilendirme hatası veya veri alınamadı.");
+                }
+                return response.json();
+            })
+            .then(data => successCallback(data))
+            .catch(error => {
+                console.error("Hata:", error);
+                alert("Takvim verileri alınamadı.");
+                failureCallback(error);
+            });
+        },
+
+        dateClick: function(info) {
+            window.location.href = `/calendar/day/${info.dateStr}/`;
+        }
+    });
+
+    calendar.render();
+});
+</script>
+
+<style>
+  #calendar {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  }
+</style>
+{% endblock %}

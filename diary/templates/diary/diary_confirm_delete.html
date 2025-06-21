@@ -1,0 +1,18 @@
+{% extends 'diary/base.html' %}
+{% load static %}
+
+{% block title %}Girdiyi Sil{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'diary/style.css' %}">
+
+<div class="container">
+    <h2>“{{ entry.title }}” başlıklı günlük girdisini silmek istediğinize emin misiniz?</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Evet, sil</button>
+        <a href="{% url 'dashboard' %}" class="btn-cancel">Vazgeç</a>
+    </form>
+</div>
+{% endblock %}

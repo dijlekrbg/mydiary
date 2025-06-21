@@ -1,0 +1,56 @@
+
+{% extends 'diary/base.html' %}
+{% load static %}
+
+{% block title %}Günlüklerim{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'diary/style.css' %}">
+
+<div class="container">
+    <h1>Hoş geldiniz {{ request.user.username }}</h1>
+
+    <div style="margin-bottom: 20px;">
+        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit">Çıkış Yap</button>
+        </form>
+        <a href="{% url 'diary_create' %}">+ Yeni Günlük Ekle</a>
+    </div>
+
+    <!-- Arama Formu -->
+    <form method="get" action="{% url 'dashboard' %}">
+        <input type="text" name="q" placeholder="Başlık veya içerikte ara..." value="{{ request.GET.q }}">
+        <button type="submit">Ara</button>
+    </form>
+
+    <h2>Günlük Girişleriniz</h2>
+
+    {% if entries %}
+        {% for entry in entries %}
+            <div class="entry-box">
+                <h3>{{ entry.title }}</h3>
+
+                {% if entry.photo %}
+                    <img src="{{ entry.photo.url }}" alt="Fotoğraf">
+                {% endif %}
+
+                <p>{{ entry.content|linebreaks }}</p>
+                <small>{{ entry.created_at|date:"d M Y - H:i" }}</small><br>
+
+                <a href="{% url 'diary_edit' entry.id %}">Düzenle</a> |
+                <a href="{% url 'diary_delete' entry.id %}">Sil</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Henüz bir günlük girişi yok.</p>
+    {% endif %}
+    <script>
+    const accessToken = "{{ request.session.access|default:'' }}";
+    if (accessToken) {
+        localStorage.setItem('access', accessToken);
+        console.log("JWT access token kaydedildi.");
+    }
+</script>
+
+{% endblock %}

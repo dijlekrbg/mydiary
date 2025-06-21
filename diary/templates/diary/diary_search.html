@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Günlük Arama Sonuçları</title>
+</head>
+<body>
+
+{% extends 'diary/base.html' %}
+
+{% block title %}Arama Sonuçları{% endblock %}
+
+{% block content %}
+
+    <h1>"{{ query }}" için Arama Sonuçları</h1>
+
+    <a href="{% url 'dashboard' %}">← Geri dön</a>
+
+    {% if results %}
+        {% for entry in results %}
+            <div>
+                <h2>{{ entry.title }}</h2>
+                {% if entry.photo %}
+                    <img src="{{ entry.photo.url }}" alt="Fotoğraf" style="max-width: 300px;"><br>
+                {% endif %}
+                <p>{{ entry.content|linebreaks }}</p>
+                <small>{{ entry.created_at|date:"d M Y - H:i" }}</small>
+                <br>
+                <a href="{% url 'diary_edit' entry.id %}">Düzenle</a> |
+                <a href="{% url 'diary_delete' entry.id %}">Sil</a>
+                <hr>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>"{{ query }}" ile eşleşen herhangi bir günlük bulunamadı.</p>
+    {% endif %}
+    {% endblock %}
+</body>
+</html>

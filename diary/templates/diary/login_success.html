@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Giriş Başarılı</title>
+</head>
+<body>
+    <script>
+        const token = "{{ access_token|escapejs }}";
+        if (token) {
+            localStorage.setItem("access", token);
+            console.log("JWT token kaydedildi:", token);
+            window.location.href = '/dashboard/';
+        } else {
+            alert("Token alınamadı!");
+            window.location.href = '/login/';
+        }
+    </script>
+</body>
+</html>

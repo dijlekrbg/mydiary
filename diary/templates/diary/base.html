@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Günlük Uygulaması{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'diary/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        {% if request.user.is_authenticated %}
+            <header>
+                <h1>Günlük Uygulaması</h1>
+                <div style="margin-bottom: 20px;">
+                    <span><strong>Hoş geldiniz, {{ request.user.username }}</strong></span>
+                    <div style="margin-top: 10px;">
+                        <a href="{% url 'dashboard' %}">Ana Sayfa</a> |
+                        <a href="{% url 'diary_create' %}">+ Yeni Günlük</a> |
+                        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit">Çıkış Yap</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Arama Formu -->
+                <form method="get" action="{% url 'diary_search' %}">
+                    <input type="text" name="q" placeholder="Günlüklerde ara..." value="{{ request.GET.q }}">
+                    <button type="submit">Ara</button>
+                </form>
+            </header>
+            <hr>
+        {% endif %}
+
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+</body>
+</html>
