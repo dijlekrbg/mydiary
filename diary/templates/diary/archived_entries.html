@@ -1,0 +1,14 @@
+{% extends 'diary/base.html' %}
+{% block content %}
+<h2>Arşivlenmiş Günlükler</h2>
+{% for entry in entries %}
+    <div class="entry-box">
+        <h3>{{ entry.title }}</h3>
+        <p>{{ entry.content|linebreaks }}</p>
+        <a href="{% url 'unarchive_entry' entry.id %}">Arşivden Çıkar</a>
+    </div>
+    <hr>
+{% empty %}
+    <p>Arşivlenmiş günlük yok.</p>
+{% endfor %}
+{% endblock %}

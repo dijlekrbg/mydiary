@@ -1,0 +1,16 @@
+{% extends 'diary/base.html' %}
+{% block content %}
+<h2>{{ date }} tarihli günlükler</h2>
+{% if entries %}
+    {% for entry in entries %}
+        <div class="entry-box">
+            <h3>{{ entry.title }}</h3>
+            <p>{{ entry.content|linebreaks }}</p>
+            <small>{{ entry.created_at|date:"d M Y - H:i" }}</small>
+        </div>
+        <hr>
+    {% endfor %}
+{% else %}
+    <p>Bugüne ait günlüğünüz yok.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'diary/base.html' %}
+{% block content %}
+<h2>Fotoğraf Galerisi</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    {% for photo in photos %}
+        <div>
+            <img src="{{ photo.image.url }}" alt="Günlük Fotoğrafı" style="max-width:200px; max-height:200px; border-radius:10px;">
+        </div>
+    {% empty %}
+        <p>Henüz fotoğraf eklenmemiş.</p>
+    {% endfor %}
+</div>
+{% endblock %}

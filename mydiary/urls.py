@@ -18,9 +18,6 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth import views as auth_views 
-from diary import views as diary_views
-from rest_framework.authtoken.views import obtain_auth_token
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -30,14 +27,11 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/',auth_views.LoginView.as_view(template_name= 'diary/login.html'), name='login'),
-    path('register/', diary_views.register_view, name='register'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('', include('diary.urls')),
-   
-    path('api/', include('diary.api_urls')),
+    
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    
 
 ]
 

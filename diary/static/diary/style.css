@@ -125,3 +125,35 @@ hr {
         width: 100%;
     }
 }
+
+.nav-link {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 6px 14px;
+    background: #0033ff;
+    color: #fff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.2s;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    background: #b3007a;
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.nav-logout {
+    background: #35dc78;
+    border: none;
+    cursor: pointer;
+    color: #fff !important;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.nav-logout:hover {
+    background: #a71d2a;
+}

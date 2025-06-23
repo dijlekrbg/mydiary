@@ -6,6 +6,15 @@
     <meta charset="UTF-8">
     <title>{% block title %}Günlük Uygulaması{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'diary/style.css' %}">
+    <!-- base.html içinde <head> tag'ine ekle -->
+    <style>
+    body {
+        background-image: url("{% static 'diary/bg1.png' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -17,6 +26,10 @@
                     <div style="margin-top: 10px;">
                         <a href="{% url 'dashboard' %}">Ana Sayfa</a> |
                         <a href="{% url 'diary_create' %}">+ Yeni Günlük</a> |
+                        <a href="{% url 'calendar_view' %}">Takvim</a> |
+                        <a href ="{% url 'diary_list' %}">Günlüklerim</a> |
+                        <a href ="{% url 'profile' %}">Profil</a> |
+                        <a href="{% url 'photo_gallery' %}">Galeri</a> |
                         <form method="post" action="{% url 'logout' %}" style="display: inline;">
                             {% csrf_token %}
                             <button type="submit">Çıkış Yap</button>

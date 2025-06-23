@@ -1,0 +1,15 @@
+{% extends 'diary/base.html' %}
+{% block content %}
+<h2>Profil Bilgilerini Güncelle</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Kaydet</button>
+</form>
+<a href="{%url 'change_password' %}">Şifre Değiştir</a>
+{% if messages %}
+    {% for message in messages %}
+        <div>{{ message }}</div>
+    {% endfor %}
+{% endif %}
+{% endblock %}

@@ -32,6 +32,13 @@
             {{ form.photo }}
             {{ form.photo.errors }}
         </div>
+        <p>
+            {{ form.is_favorite }} <label>Favori</label>
+        </p>
+        <p>
+            <label>Etiketler (virgülle ayır):</label>
+            {{ form.tags }}
+        </p>
 
         <button type="submit">
             {% if edit %}Güncellemeyi Kaydet{% else %}Kaydet{% endif %}

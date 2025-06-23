@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ entry.title }}</title>
+    <style>
+        body { font-family: DejaVu Sans, sans-serif; }
+        h1 { color: #333; }
+    </style>
+</head>
+<body>
+    <h1>{{ entry.title }}</h1>
+    <p>{{ entry.content|linebreaks }}</p>
+    <small>{{ entry.created_at|date:"d M Y - H:i" }}</small>
+</body>
+</html>

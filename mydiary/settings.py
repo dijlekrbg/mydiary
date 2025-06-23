@@ -41,6 +41,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
+
 ]
 
 MIDDLEWARE = [
@@ -147,4 +149,15 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ]
+}
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Günlük Admin",
+    "site_header": "Günlük Uygulaması",
+    "site_logo": "diary/logo.jpeg", 
+    "site_icon": "diary/logo.jpeg", 
+    "welcome_sign": "Günlük Yönetim Paneline Hoşgeldiniz!",
+    "copyright": "Dijle",
+    "search_model": ["diary.DiaryEntry", "diary.Photo"],
+    
 }

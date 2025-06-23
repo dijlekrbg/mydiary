@@ -7,7 +7,10 @@ class DiaryEntry(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    photo = models.ImageField(upload_to='diary_photos/', blank=True, null=True)  # EKLENECEK KISIM
+    photo = models.ImageField(upload_to='diary_photos/', blank=True, null=True) 
+    is_favorite = models.BooleanField(default=False)  
+    tags = models.CharField(max_length=200, blank=True) 
+    is_archived = models.BooleanField(default=False)  
     
     def __str__(self):
         return f"{self.title} ({self.user.username})"

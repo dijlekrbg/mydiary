@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch('/api/calendar-events/', {
                 method: 'GET',
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access')
+                    'Authorization': 'Bearer ' + accessToken
                 }
             })
             .then(response => {

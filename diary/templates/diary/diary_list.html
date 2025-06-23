@@ -9,9 +9,10 @@
     <h1>Günlük Girdileri</h1>
 
     {% for entry in entries %}
-        <div class="entry">
+        <div class="entry-box">
             <h2>{{ entry.title }}</h2>
-            <p>{{ entry.content }}</p>
+            <p>{{ entry.content|linebreaks  }}</p>
+            <small> {{ entry.created_at|date:"d M Y - H:i" }}</small>
 
             {% if entry.photo %}
             <div>

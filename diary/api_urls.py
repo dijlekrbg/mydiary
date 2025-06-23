@@ -1,7 +1,7 @@
 # diary/api_urls.py
 
 from rest_framework.routers import DefaultRouter
-from .views import DiaryEntryViewSet
+from . import DiaryEntryViewSet
 from django.urls import path, include
 
 router = DefaultRouter()
