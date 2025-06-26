@@ -11,9 +11,11 @@ from ..forms import ProfileUpdateForm
 from django.contrib import messages
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+import asyncio
+
 
 
 
@@ -82,6 +84,7 @@ def diary_edit(request, entry_id):
     else:
         form = DiaryEntryForm(instance=entry)
     return render(request, 'diary/diary_form.html', {'form': form, 'edit': True})
+
 @login_required
 def diary_search(request):
     query = request.GET.get('q')
@@ -225,7 +228,17 @@ def photo_gallery(request):
     photos = Photo.objects.filter(diary_entry__user=request.user)
     return render(request, 'diary/photo_gallery.html', {'photos': photos})
 
+@login_required
+def photo_delete(request, photo_id):
+    photo = get_object_or_404(Photo, id=photo_id, diary_entry__user=request.user)
+    if request.method == 'POST':
+        photo.delete()
+    return redirect('photo_gallery')
 
+
+async def async_hello(request):
+    await asyncio.sleep(1)
+    return JsonResponse({'message': 'Async destekli!'})
 
 
 

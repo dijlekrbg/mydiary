@@ -30,8 +30,7 @@ class DiaryEntrySerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'title', 'content', 'created_at', 'updated_at', 'photo','is_favorite', 'tags']
 
 
-from rest_framework import serializers
-from .models import DiaryEntry, Photo
+
 
 class PhotoSerializer(serializers.ModelSerializer):
     class Meta:

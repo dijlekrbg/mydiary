@@ -2,12 +2,12 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
 from .views.api import UserRegisterAPIView, EntriesByDayAPIView
-from .views.frontend import photo_gallery
-
-
+from .views.frontend import photo_gallery, photo_delete, async_hello
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework import permissions
 from .views.frontend import (home, diary_list, diary_create, diary_edit, diary_delete, diary_search,register_view, login_view, logout_view,dashboard, calendar_view, entries_by_day)
 from .views.frontend import archive_entry, unarchive_entry, archived_entries, profile_update, diary_pdf
-
 from .views.api import (DiaryEntryListCreateAPIView, DiaryEntryDetailAPI, DiaryEntryViewSet, CalendarEventsAPIView , get_token)
 
 from rest_framework_simplejwt.views import (
@@ -17,7 +17,17 @@ from rest_framework_simplejwt.views import (
 
 
 router = DefaultRouter()
-router.register(r'api/diary', DiaryEntryViewSet, basename='diaryenrtry')
+router.register(r'api/v1/diary', DiaryEntryViewSet, basename='diaryenrtry')
+
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Günlük API",
+        default_version='v1',
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
     path('', home, name='home'),
@@ -42,7 +52,6 @@ urlpatterns = [
     path('profil/', profile_update, name='profile'),
     path('profil/',profile_update, name='profile_update'),
     
-
     # API Router
     path('api/', include(router.urls)),
 
@@ -75,4 +84,9 @@ urlpatterns = [
 
      #fotoğraf galerisi 
     path('galeri/', photo_gallery, name='photo_gallery'),
+    #fotoğraf silme butonu
+    path('photo/<int:photo_id>/delete/', photo_delete, name='photo_delete'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('async-hello/', async_hello, name='async_hello'),
 ]

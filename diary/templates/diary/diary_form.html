@@ -27,10 +27,10 @@
             {{ form.content.errors }}
         </div>
 
+        
         <div class="form-group">
-            <label for="{{ form.photo.id_for_label }}">Fotoğraf (isteğe bağlı):</label>
-            {{ form.photo }}
-            {{ form.photo.errors }}
+            <label for="id_images">Fotoğraflar (çoklu seç):</label>
+            <input type="file" name="images" id="id_images" multiple>
         </div>
         <p>
             {{ form.is_favorite }} <label>Favori</label>

@@ -2,8 +2,6 @@ from django.contrib import admin
 from .models import DiaryEntry , Photo
 
 
-
-
 class PhotoInline(admin.TabularInline):
     model = Photo
     extra = 1

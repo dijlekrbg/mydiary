@@ -5,6 +5,10 @@
     {% for photo in photos %}
         <div>
             <img src="{{ photo.image.url }}" alt="Günlük Fotoğrafı" style="max-width:200px; max-height:200px; border-radius:10px;">
+             <form method="post" action="{% url 'photo_delete' photo.id %}" style="margin-top:10px;">
+                {% csrf_token %}
+                <button type="submit" onclick="return confirm('Fotoğrafı silmek istediğinize emin misiniz?')">Sil</button>
+            </form>
         </div>
     {% empty %}
         <p>Henüz fotoğraf eklenmemiş.</p>

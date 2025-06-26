@@ -15,8 +15,7 @@ from django.shortcuts import get_object_or_404, redirect , render
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-
-
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class DiaryEntryListCreateAPIView(APIView):
@@ -66,7 +65,9 @@ def calendar_events(request):
 class DiaryEntryViewSet(viewsets.ModelViewSet):
     
     permission_classes = [permissions.IsAuthenticated]
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter,filters.SearchFilter]
+    filterset_fields = ['is_favorite', 'is_archived', 'tags']
+    ordering_fields = ['created_at', 'title']
     search_fields = ['title', 'content']
 
     def get_serializer_class(self):
