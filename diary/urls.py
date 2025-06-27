@@ -17,7 +17,7 @@ from rest_framework_simplejwt.views import (
 
 
 router = DefaultRouter()
-router.register(r'api/v1/diary', DiaryEntryViewSet, basename='diaryenrtry')
+router.register(r'api/v1/diary', DiaryEntryViewSet, basename='diaryentry')
 
 
 schema_view = get_schema_view(

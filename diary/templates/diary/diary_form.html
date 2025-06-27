@@ -48,35 +48,40 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('diary-form');
-    form.addEventListener('submit', async function (e) {
-        e.preventDefault();
+form.addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-        const formData = new FormData(form);
+    const formData = new FormData(form);
 
-        try {
-            const response = await fetch('/api/diary/', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access'),
-                },
-                body: formData
-            });
+    try {
+        const response = await fetch('/api/diary/', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access'),
+            },
+            body: formData
+        });
 
-            if (response.ok) {
-                alert('Günlük başarıyla kaydedildi!');
-                window.location.href = '/dashboard/';
-            } else {
+        if (response.ok) {
+            alert('Günlük başarıyla kaydedildi!');
+            window.location.href = '/dashboard/';
+        } else {
+            // Hata cevabının JSON olup olmadığını anlamaya çalış
+            const contentType = response.headers.get('content-type') || '';
+            if (contentType.includes('application/json')) {
                 const errorData = await response.json();
                 alert('Hata: ' + JSON.stringify(errorData));
+            } else {
+                const errorText = await response.text();
+                alert('Sunucudan beklenmedik cevap geldi:\n' + errorText);
             }
-        } catch (error) {
-            console.error('İstek hatası:', error);
-            alert('Bir hata oluştu. Lütfen tekrar deneyin.');
         }
-    });
+    } catch (error) {
+        console.error('İstek hatası:', error);
+        alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+    }
 });
+
 </script>
 
 {% endblock %}

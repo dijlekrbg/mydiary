@@ -56,9 +56,15 @@ class DiaryEntryCreateSerializer(serializers.ModelSerializer):
         fields = ['title', 'content', 'is_favorite', 'is_archived', 'tags', 'images']
 
     def create(self, validated_data):
-        images = validated_data.pop('images', [])
-        diary_entry = DiaryEntry.objects.create(**validated_data)
-        for image in images:
-            Photo.objects.create(diary_entry=diary_entry, image=image)
-        return diary_entry
+        try:
+            images = validated_data.pop('images', [])
+            user=self.context['request'].user
+            
+            diary_entry = DiaryEntry.objects.create(**validated_data)
+            for image in images:
+                Photo.objects.create(diary_entry=diary_entry, image=image)
+            return diary_entry
+        except Exception as e:
+            print("create() hatası :",e)
+            raise e
 
